@@ -81,7 +81,7 @@ let delayedExecutionReminderPerformingPrayer = false;
 
 async function updatedCompareReminderPerformingPrayersTime() {
   let compareWith = (timeDifference) =>
-    timeDifference >= -23 && timeDifference <= -20;
+    timeDifference >= -22 && timeDifference <= -20;
 
   let compareTimeWithPrayer = await compareTimeNowWithPrayers(compareWith);
 

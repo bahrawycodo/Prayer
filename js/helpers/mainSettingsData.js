@@ -41,4 +41,5 @@ export function saveMainSettingsDataToClient(data) {
     title: "تم الحفظ",
     timer: 1500,
   });
+  Prayers();
 }

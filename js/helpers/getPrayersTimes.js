@@ -10,10 +10,10 @@ async function getPrayersTimesFromApi() {
   let dateNow = getDateNow();
   let oldPrayers = JSON.parse(localStorage.getItem("Prayers"));
   if (
+    oldPrayers == null ||
     oldPrayers.Date.Day != dateNow.Day ||
     oldPrayers.Date.Month != dateNow.Month ||
-    oldPrayers.Date.Year != dateNow.Year ||
-    oldPrayers == null
+    oldPrayers.Date.Year != dateNow.Year
   ) {
     let response = await fetch(
       `https://api.aladhan.com/v1/calendarByCity/${dateNow.Year}?city=${city}&country=KSA&method=4`

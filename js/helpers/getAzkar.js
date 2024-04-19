@@ -1,9 +1,9 @@
 async function getAzkarAfterCallerData() {
-  let response = await fetch("../../resources/AzkarAfterCaller.json");
+  let response = await fetch("../resources/AzkarAfterCaller.json");
   return await response.json();
 }
 async function getAzkarAfterPrayerData() {
-  let response = await fetch("../../resources/AzkarAfterPrayer.json");
+  let response = await fetch("../resources/AzkarAfterPrayer.json");
   return await response.json();
 }
 export async function getRandomOfAzkarCaller(className) {

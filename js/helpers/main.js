@@ -1,0 +1,123 @@
+import { compareTimeNowWithPrayers } from "./general.js";
+async function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+setInterval(() => executionFunctions(), 1000);
+
+let delayedExecutionRemaingTimeForPrayer = false;
+async function updatedComparePrayersTime() {
+  let compareWith = (timeDifference) =>
+    timeDifference <= 15 && timeDifference >= 0;
+
+  let compareTimeWithPrayer = await compareTimeNowWithPrayers(compareWith);
+
+  if (compareTimeWithPrayer.nextPrayer != null) {
+    if (delayedExecutionRemaingTimeForPrayer) {
+      await sleep(45 * 60 * 1000);
+      delayedExecutionRemaingTimeForPrayer = false;
+    } else {
+      remainingTime(compareTimeWithPrayer);
+      delayedExecutionRemaingTimeForPrayer = true;
+    }
+  }
+}
+let delayedExecutionRemaingTimeForCaller = false;
+async function updatedComparePrayersCallerTime() {
+  let compareWith = (timeDifference) =>
+    timeDifference >= -5 && timeDifference <= 0;
+
+  let compareTimeWithPrayer = await compareTimeNowWithPrayers(compareWith);
+
+  if (compareTimeWithPrayer.nextPrayer != null) {
+    if (delayedExecutionRemaingTimeForCaller) {
+      await sleep(45 * 60 * 1000);
+      delayedExecutionRemaingTimeForCaller = false;
+    } else {
+      Caller(compareTimeWithPrayer);
+      delayedExecutionRemaingTimeForCaller = true;
+    }
+  }
+}
+let delayedExecutionAzkarAfterCaller = false;
+async function updatedCompareAzkarCallerTime() {
+  let compareWith = (timeDifference) =>
+    timeDifference >= -10 && timeDifference <= -5;
+
+  let compareTimeWithPrayer = await compareTimeNowWithPrayers(compareWith);
+
+  if (compareTimeWithPrayer.nextPrayer != null) {
+    if (delayedExecutionAzkarAfterCaller) {
+      await sleep(45 * 60 * 1000);
+      delayedExecutionAzkarAfterCaller = false;
+    } else {
+      Azkar();
+      delayedExecutionAzkarAfterCaller = true;
+    }
+  }
+}
+let delayedExecutionRemaingTimeForPerformingPrayer = false;
+
+async function updatedComparePerformingPrayersTime() {
+  let timeCompared = 0;
+  let compareWith = (timeDifference) => {
+    timeCompared = 20 - timeDifference * -1;
+    return timeDifference >= -20 && timeDifference <= -10;
+  };
+
+  let compareTimeWithPrayer = await compareTimeNowWithPrayers(compareWith);
+
+  if (compareTimeWithPrayer.nextPrayer != null) {
+    if (delayedExecutionRemaingTimeForPerformingPrayer) {
+      await sleep(45 * 60 * 1000);
+      delayedExecutionRemaingTimeForPerformingPrayer = false;
+    } else {
+      remainingTimeToPray(timeCompared);
+      delayedExecutionRemaingTimeForPerformingPrayer = true;
+    }
+  }
+}
+let delayedExecutionReminderPerformingPrayer = false;
+
+async function updatedCompareReminderPerformingPrayersTime() {
+  let compareWith = (timeDifference) =>
+    timeDifference >= -23 && timeDifference <= -20;
+
+  let compareTimeWithPrayer = await compareTimeNowWithPrayers(compareWith);
+
+  if (compareTimeWithPrayer.nextPrayer != null) {
+    if (delayedExecutionReminderPerformingPrayer) {
+      await sleep(45 * 60 * 1000);
+      delayedExecutionReminderPerformingPrayer = false;
+    } else {
+      reminderPerformingPrayer(compareTimeWithPrayer);
+      delayedExecutionReminderPerformingPrayer = true;
+    }
+  }
+}
+let delayedExecutionAzkarAfterPrayer = false;
+
+async function updatedCompareAzkarPerformingPrayersTime() {
+  let compareWith = (timeDifference) =>
+    timeDifference >= -35 && timeDifference <= -23;
+
+  let compareTimeWithPrayer = await compareTimeNowWithPrayers(compareWith);
+
+  if (compareTimeWithPrayer.nextPrayer != null) {
+    if (delayedExecutionAzkarAfterPrayer) {
+      await sleep(45 * 60 * 1000);
+      delayedExecutionAzkarAfterPrayer = false;
+    } else {
+      AzkarAfterPrayer();
+      delayedExecutionAzkarAfterPrayer = true;
+    }
+  }
+}
+function executionFunctions() {
+  updatedComparePrayersTime();
+  updatedComparePrayersCallerTime();
+  updatedCompareAzkarCallerTime();
+  updatedComparePerformingPrayersTime();
+  updatedCompareReminderPerformingPrayersTime();
+  updatedCompareAzkarPerformingPrayersTime();
+}

@@ -1,4 +1,5 @@
 import { handleTitle, playSound } from "../helpers/general.js";
+import { getMainSettingsDataFromClient } from "../helpers/mainSettingsData.js";
 
 export function reminderPerformingPrayer(compareTimeWithPrayer) {
   function generate() {

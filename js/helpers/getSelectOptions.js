@@ -1,10 +1,10 @@
 import { getMainSettingsDataFromClient } from "./mainSettingsData.js";
 async function getCitiesData() {
-  let response = await fetch("../resources/ksa-cities.json");
+  let response = await fetch("resources/ksa-cities.json");
   return await response.json();
 }
 async function getLanguagesData() {
-  let response = await fetch("../resources/languages.json");
+  let response = await fetch("resources/languages.json");
   return await response.json();
 }
 

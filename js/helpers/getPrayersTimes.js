@@ -1,4 +1,4 @@
-import { getMainSettingsDataFromClient } from "./MainSettingsData.js";
+import { getMainSettingsDataFromClient } from "./mainSettingsData.js";
 import { getDateNow } from "./general.js";
 
 export async function getPrayersTimes() {

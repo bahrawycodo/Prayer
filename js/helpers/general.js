@@ -87,6 +87,6 @@ export async function compareTimeNowWithPrayers(compareWith) {
   return { nextPrayer: null };
 }
 export function playSound(audio) {
-  var audio = new Audio(`../sounds/${audio}.mp3`);
+  var audio = new Audio(`sounds/${audio}.mp3`);
   audio.play();
 }

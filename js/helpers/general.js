@@ -1,4 +1,3 @@
-import { getPrayerswithSplitedFormat } from "./getPrayersTimes.js";
 export let handleDoubleZero = (num) => (num < 10 ? `0${num}` : num);
 export let convertToSeconds = (
   seconds = 0,
@@ -57,8 +56,7 @@ function getTimeNow() {
   };
 }
 
-export async function compareTimeNowWithPrayers(compareWith) {
-  let prayersTimes = await getPrayerswithSplitedFormat();
+export async function compareTimeNowWithPrayers(compareWith, prayersTimes) {
   let timeNow = getTimeNow();
   // Extract hours and minutes from the current time
   let currentHours = parseInt(timeNow.Hours);

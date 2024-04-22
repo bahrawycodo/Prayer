@@ -1,3 +1,4 @@
+import { getPrayerswithSplitedFormat } from "./getPrayersTimes.js";
 import { compareTimeNowWithPrayers } from "./general.js";
 async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -6,11 +7,14 @@ async function sleep(ms) {
 setInterval(() => executionFunctions(), 1000);
 
 let delayedExecutionRemaingTimeForPrayer = false;
-async function updatedComparePrayersTime() {
+async function updatedComparePrayersTime(prayersTimes) {
   let compareWith = (timeDifference) =>
     timeDifference <= 15 && timeDifference >= 0;
 
-  let compareTimeWithPrayer = await compareTimeNowWithPrayers(compareWith);
+  let compareTimeWithPrayer = await compareTimeNowWithPrayers(
+    compareWith,
+    prayersTimes
+  );
 
   if (compareTimeWithPrayer.nextPrayer != null) {
     if (delayedExecutionRemaingTimeForPrayer) {
@@ -23,11 +27,14 @@ async function updatedComparePrayersTime() {
   }
 }
 let delayedExecutionRemaingTimeForCaller = false;
-async function updatedComparePrayersCallerTime() {
+async function updatedComparePrayersCallerTime(prayersTimes) {
   let compareWith = (timeDifference) =>
     timeDifference >= -5 && timeDifference <= 0;
 
-  let compareTimeWithPrayer = await compareTimeNowWithPrayers(compareWith);
+  let compareTimeWithPrayer = await compareTimeNowWithPrayers(
+    compareWith,
+    prayersTimes
+  );
 
   if (compareTimeWithPrayer.nextPrayer != null) {
     if (delayedExecutionRemaingTimeForCaller) {
@@ -40,11 +47,14 @@ async function updatedComparePrayersCallerTime() {
   }
 }
 let delayedExecutionAzkarAfterCaller = false;
-async function updatedCompareAzkarCallerTime() {
+async function updatedCompareAzkarCallerTime(prayersTimes) {
   let compareWith = (timeDifference) =>
     timeDifference >= -10 && timeDifference <= -5;
 
-  let compareTimeWithPrayer = await compareTimeNowWithPrayers(compareWith);
+  let compareTimeWithPrayer = await compareTimeNowWithPrayers(
+    compareWith,
+    prayersTimes
+  );
 
   if (compareTimeWithPrayer.nextPrayer != null) {
     if (delayedExecutionAzkarAfterCaller) {
@@ -58,14 +68,17 @@ async function updatedCompareAzkarCallerTime() {
 }
 let delayedExecutionRemaingTimeForPerformingPrayer = false;
 
-async function updatedComparePerformingPrayersTime() {
+async function updatedComparePerformingPrayersTime(prayersTimes) {
   let timeCompared = 0;
   let compareWith = (timeDifference) => {
     timeCompared = 20 - timeDifference * -1;
     return timeDifference >= -20 && timeDifference <= -10;
   };
 
-  let compareTimeWithPrayer = await compareTimeNowWithPrayers(compareWith);
+  let compareTimeWithPrayer = await compareTimeNowWithPrayers(
+    compareWith,
+    prayersTimes
+  );
 
   if (compareTimeWithPrayer.nextPrayer != null) {
     if (delayedExecutionRemaingTimeForPerformingPrayer) {
@@ -79,11 +92,14 @@ async function updatedComparePerformingPrayersTime() {
 }
 let delayedExecutionReminderPerformingPrayer = false;
 
-async function updatedCompareReminderPerformingPrayersTime() {
+async function updatedCompareReminderPerformingPrayersTime(prayersTimes) {
   let compareWith = (timeDifference) =>
     timeDifference >= -22 && timeDifference <= -20;
 
-  let compareTimeWithPrayer = await compareTimeNowWithPrayers(compareWith);
+  let compareTimeWithPrayer = await compareTimeNowWithPrayers(
+    compareWith,
+    prayersTimes
+  );
 
   if (compareTimeWithPrayer.nextPrayer != null) {
     if (delayedExecutionReminderPerformingPrayer) {
@@ -97,11 +113,14 @@ async function updatedCompareReminderPerformingPrayersTime() {
 }
 let delayedExecutionAzkarAfterPrayer = false;
 
-async function updatedCompareAzkarPerformingPrayersTime() {
+async function updatedCompareAzkarPerformingPrayersTime(prayersTimes) {
   let compareWith = (timeDifference) =>
     timeDifference >= -35 && timeDifference <= -23;
 
-  let compareTimeWithPrayer = await compareTimeNowWithPrayers(compareWith);
+  let compareTimeWithPrayer = await compareTimeNowWithPrayers(
+    compareWith,
+    prayersTimes
+  );
 
   if (compareTimeWithPrayer.nextPrayer != null) {
     if (delayedExecutionAzkarAfterPrayer) {
@@ -113,11 +132,13 @@ async function updatedCompareAzkarPerformingPrayersTime() {
     }
   }
 }
-function executionFunctions() {
-  updatedComparePrayersTime();
-  updatedComparePrayersCallerTime();
-  updatedCompareAzkarCallerTime();
-  updatedComparePerformingPrayersTime();
-  updatedCompareReminderPerformingPrayersTime();
-  updatedCompareAzkarPerformingPrayersTime();
+async function executionFunctions() {
+  let prayersTimes = await getPrayerswithSplitedFormat();
+
+  updatedComparePrayersTime(prayersTimes);
+  updatedComparePrayersCallerTime(prayersTimes);
+  updatedCompareAzkarCallerTime(prayersTimes);
+  updatedComparePerformingPrayersTime(prayersTimes);
+  updatedCompareReminderPerformingPrayersTime(prayersTimes);
+  updatedCompareAzkarPerformingPrayersTime(prayersTimes);
 }

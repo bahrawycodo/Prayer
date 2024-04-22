@@ -2,38 +2,61 @@ import { getMainSettingsDataFromClient } from "./mainSettingsData.js";
 import { getDateNow } from "./general.js";
 
 export async function getPrayersTimes() {
-  let data = await getPrayersTimesFromApi();
+  let data = await getPrayersTimesForOneDay();
   return getTimingsWithFormat(data.timings, formatTime);
 }
-async function getPrayersTimesFromApi() {
+async function getPrayersTimesFromApi(dateNow, city) {
+  let response = await fetch(
+    `https://api.aladhan.com/v1/calendarByCity/${dateNow.Year}?city=${city}&country=KSA&method=4`
+  );
+  return await response.json();
+}
+async function getPrayersTimesFromResources(city) {
+  let response = await fetch(`resources/Azan_KSA/Azan_${city}.json`);
+  return await response.json();
+}
+async function handleGetPrayersTimesFrom() {
   var city = getMainSettingsDataFromClient().city;
   let dateNow = getDateNow();
   let oldPrayers = JSON.parse(localStorage.getItem("Prayers"));
+
   if (
     oldPrayers == null ||
-    oldPrayers.Date.Day != dateNow.Day ||
-    oldPrayers.Date.Month != dateNow.Month ||
-    oldPrayers.Date.Year != dateNow.Year
+    oldPrayers.Date.Year != dateNow.Year ||
+    oldPrayers.City != city
   ) {
-    let response = await fetch(
-      `https://api.aladhan.com/v1/calendarByCity/${dateNow.Year}?city=${city}&country=KSA&method=4`
-    );
-    let data = await response.json();
+    let data;
+    try {
+      data = await getPrayersTimesFromApi(dateNow, city);
+    } catch (error) {
+      data = await getPrayersTimesFromResources(city);
+    }
     localStorage.setItem(
       "Prayers",
       JSON.stringify({
+        City: city,
         Date: dateNow,
-        timings: data.data[dateNow.Month][dateNow.Day].timings,
+        timings: data.data,
       })
     );
 
     return {
+      City: city,
       Date: dateNow,
-      timings: data.data[dateNow.Month][dateNow.Day].timings,
+      timings: data.data,
     };
   } else {
     return oldPrayers;
   }
+}
+async function getPrayersTimesForOneDay() {
+  let data = await handleGetPrayersTimesFrom();
+  let dateNow = getDateNow();
+  return {
+    city: data.City,
+    Date: data.Date,
+    timings: data.timings[dateNow.Month][dateNow.Day].timings,
+  };
 }
 function getTimingsWithFormat(timings, format) {
   return {
@@ -79,7 +102,7 @@ function formatTime(time) {
   }
 }
 export async function getPrayerswithSplitedFormat() {
-  let data = await getPrayersTimesFromApi();
+  let data = await getPrayersTimesForOneDay();
   return getTimingsWithFormat(data.timings, splitedFormat);
 }
 

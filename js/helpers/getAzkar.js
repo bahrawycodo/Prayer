@@ -42,8 +42,19 @@ export async function handleAzkarAfterPrayer(className, pageLength = 4) {
   renderMainContainers();
   renderPagnation();
   renderList(1);
+
   $(`.${className}`).on("click", ".points li", function () {
     $(this).addClass("active").siblings().removeClass("active");
     renderList($(this).attr("data-id"));
   });
+  setInterval(() => {
+    let selectedActive = $(`.${className} .points li.active`).attr("data-id");
+    if (selectedActive == pages) {
+      Prayers();
+    } else {
+      $(`.${className} .points li`)
+        .attr("data-id", selectedActive + 1)
+        .click();
+    }
+  }, 5000);
 }

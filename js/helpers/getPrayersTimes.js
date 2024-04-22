@@ -31,20 +31,14 @@ async function handleGetPrayersTimesFrom() {
     } catch (error) {
       data = await getPrayersTimesFromResources(city);
     }
-    localStorage.setItem(
-      "Prayers",
-      JSON.stringify({
-        City: city,
-        Date: dateNow,
-        timings: data.data,
-      })
-    );
-
-    return {
+    let obj = {
       City: city,
       Date: dateNow,
       timings: data.data,
     };
+    localStorage.setItem("Prayers", JSON.stringify(obj));
+
+    return obj;
   } else {
     return oldPrayers;
   }
@@ -53,8 +47,7 @@ async function getPrayersTimesForOneDay() {
   let data = await handleGetPrayersTimesFrom();
   let dateNow = getDateNow();
   return {
-    city: data.City,
-    Date: data.Date,
+    ...data,
     timings: data.timings[dateNow.Month][dateNow.Day].timings,
   };
 }

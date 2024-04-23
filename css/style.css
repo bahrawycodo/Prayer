@@ -1056,7 +1056,7 @@ section.general {
   font-size: 0.9rem;
 }
 .AzkarAfterPrayer .bottom .azkarList li::before {
-  content: "";
+  content: attr(data-number);
   position: absolute;
   background: url(../images/AzkarAfterPrayerListIcon.png) no-repeat;
   background-size: 100% 100%;
@@ -1064,6 +1064,10 @@ section.general {
   right: 0;
   width: 30px;
   height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000;
 }
 .AzkarAfterPrayer .bottom .points {
   display: flex;

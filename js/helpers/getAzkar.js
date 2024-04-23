@@ -25,7 +25,7 @@ export async function handleAzkarAfterPrayer(className, pageLength = 4) {
       let end =
         pageLength * page > data.length ? data.length : pageLength * page;
       for (let i = start; i < end; i++) {
-        html += `<li>${data[i]}</li>`;
+        html += `<li data-number="${data[i].Number}">${data[i].Text}</li>`;
       }
       $(`.${className} .azkarList`).html(html);
     }
@@ -48,13 +48,17 @@ export async function handleAzkarAfterPrayer(className, pageLength = 4) {
     renderList($(this).attr("data-id"));
   });
   setInterval(() => {
-    let selectedActive = $(`.${className} .points li.active`).attr("data-id");
+    let selectedActive = parseInt(
+      $(`.${className} .points li.active`).attr("data-id")
+    );
+    console.log(selectedActive);
     if (selectedActive == pages) {
-      Prayers();
+      // Prayers();
     } else {
-      $(`.${className} .points li`)
-        .attr("data-id", selectedActive + 1)
-        .click();
+      console.log(
+        $(`.${className} .points li[data-id="${selectedActive + 1}"]`)
+      );
+      $(`.${className} .points li[data-id="${selectedActive + 1}"]`).click();
     }
   }, 5000);
 }

@@ -46,9 +46,10 @@ async function handleGetPrayersTimesFrom() {
 async function getPrayersTimesForOneDay() {
   let data = await handleGetPrayersTimesFrom();
   let dateNow = getDateNow();
+
   return {
     ...data,
-    timings: data.timings[dateNow.Month][dateNow.Day].timings,
+    timings: data.timings[dateNow.Month][dateNow.Day - 1].timings,
   };
 }
 function getTimingsWithFormat(timings, format) {

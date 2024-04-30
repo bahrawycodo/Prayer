@@ -56,5 +56,5 @@ export async function handleAzkarAfterPrayer(className, pageLength = 4) {
     } else {
       $(`.${className} .points li[data-id="${selectedActive + 1}"]`).click();
     }
-  }, 5000);
+  }, 30000);
 }

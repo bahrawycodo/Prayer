@@ -115,7 +115,7 @@ let delayedExecutionAzkarAfterPrayer = false;
 
 async function updatedCompareAzkarPerformingPrayersTime(prayersTimes) {
   let compareWith = (timeDifference) =>
-    timeDifference >= -35 && timeDifference <= -23;
+    timeDifference >= -35 && timeDifference <= -22;
 
   let compareTimeWithPrayer = await compareTimeNowWithPrayers(
     compareWith,

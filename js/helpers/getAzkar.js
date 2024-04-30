@@ -51,13 +51,9 @@ export async function handleAzkarAfterPrayer(className, pageLength = 4) {
     let selectedActive = parseInt(
       $(`.${className} .points li.active`).attr("data-id")
     );
-    console.log(selectedActive);
     if (selectedActive == pages) {
-      // Prayers();
+      Prayers();
     } else {
-      console.log(
-        $(`.${className} .points li[data-id="${selectedActive + 1}"]`)
-      );
       $(`.${className} .points li[data-id="${selectedActive + 1}"]`).click();
     }
   }, 5000);
